@@ -13,13 +13,27 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @GetMapping("/getUsers")
     public ArrayList<UserModel> getUsers(){
         return userService.getUsers();
     }
 
-    @PostMapping
+    @PostMapping("/newUser")
     public UserModel newUser(@RequestBody UserModel user){
         return userService.saveUser(user);
+    }
+
+    @PostMapping("/updateUser")
+    public UserModel updateUser(@RequestBody UserModel user){
+        return userService.saveUser(user);
+    }
+
+    @DeleteMapping( path = "/deleteUser/{id}")
+    public  String deleteUser(@PathVariable("id")Long id){
+        if(userService.deletUser(id)){
+            return "El usuario con id "+id+" se elimino correctamente";
+        }else {
+            return "El usuario con id "+id+" no se pudo eliminar";
+        }
     }
 }
