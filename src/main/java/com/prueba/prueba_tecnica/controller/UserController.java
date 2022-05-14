@@ -23,7 +23,7 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @PostMapping("/updateUser")
+    @PutMapping("/updateUser")
     public UserModel updateUser(@RequestBody UserModel user){
         return userService.saveUser(user);
     }
