@@ -30,7 +30,7 @@ public class UserController {
 
     @DeleteMapping( path = "/deleteUser/{id}")
     public  String deleteUser(@PathVariable("id")Long id){
-        if(userService.deletUser(id)){
+        if(userService.deleteUser(id)){
             return "El usuario con id "+id+" se elimino correctamente";
         }else {
             return "El usuario con id "+id+" no se pudo eliminar";
