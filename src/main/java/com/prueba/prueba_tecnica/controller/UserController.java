@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/user")
@@ -24,7 +25,7 @@ public class UserController {
     public ResponseEntity<UserModel> newUser(@RequestBody UserModel user){
         ResponseEntity<UserModel> response = null;
 
-        if(user.getNombre()==null || user.getTelefono()==null){
+        if(user.getNombre()==null || user.getTelefono()==null || Objects.equals(user.getNombre(), "") || Objects.equals(user.getTelefono(), "")){
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }else{
             response = ResponseEntity.ok(userService.saveUser(user));
