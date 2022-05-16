@@ -10,7 +10,9 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true,nullable = false)
     private Long id;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private String telefono;
 
     public Long getId() {
