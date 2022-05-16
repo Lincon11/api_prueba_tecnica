@@ -34,16 +34,26 @@ public class UserController {
     }
 
     @PutMapping("/updateUser")
-    public UserModel updateUser(@RequestBody UserModel user){
-        return userService.saveUser(user);
+    public ResponseEntity<UserModel>  updateUser(@RequestBody UserModel user){
+        ResponseEntity<UserModel> response = null;
+        if(user.getNombre()==null || user.getTelefono()==null || Objects.equals(user.getNombre(), "") || Objects.equals(user.getTelefono(), "")){
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else if (userService.findById(user.getId()).isPresent()){
+                response = ResponseEntity.ok(userService.saveUser(user));
+        }else{
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return response;
     }
 
     @DeleteMapping( path = "/deleteUser/{id}")
-    public  String deleteUser(@PathVariable("id")Long id){
+    public ResponseEntity<String> deleteUser(@PathVariable("id")Long id){
+        ResponseEntity<String> response = null;
         if(userService.deleteUser(id)){
-            return "El usuario con id "+id+" se elimino correctamente";
+            response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("El usuario con id " +id+ " se elimino correctamente");
         }else {
-            return "El usuario con id "+id+" no se pudo eliminar";
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("El usuario con id "+id+" no se pudo eliminar");
         }
+        return response;
     }
 }
